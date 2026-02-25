@@ -1,0 +1,103 @@
+$header-padding: 15px 0;
+$header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$logo-size: 24px;
+$btn-padding: 8px 16px;
+$btn-radius: 4px;
+$btn-font-size: 14px;
+$mobile-breakpoint: 768px;
+$transition-speed: 0.3s;
+
+@mixin mobile {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin transition {
+  transition: all $transition-speed ease;
+}
+
+.header {
+  background-color: var(--card-bg);
+  box-shadow: $header-shadow;
+  padding: $header-padding;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .container {
+    @include flex-center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: $logo-size;
+    font-weight: bold;
+    color: var(--primary);
+    @include transition;
+
+    &:hover {
+      color: var(--primary-dark);
+    }
+  }
+
+  .nav {
+    @include flex-center;
+    gap: 20px;
+
+    @include mobile {
+      gap: 10px;
+    }
+  }
+
+  .userInfo {
+    @include flex-center;
+    gap: 15px;
+
+    @include mobile {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  .userName {
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .loginLink,
+  .logoutBtn {
+    padding: $btn-padding;
+    border-radius: $btn-radius;
+    font-size: $btn-font-size;
+    font-weight: 500;
+    cursor: pointer;
+    @include transition;
+  }
+
+  .loginLink {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+
+    &:hover {
+      background-color: var(--primary-dark);
+    }
+  }
+
+  .logoutBtn {
+    background-color: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+
+    &:hover {
+      background-color: var(--danger);
+      color: white;
+    }
+  }
+}
