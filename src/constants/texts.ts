@@ -11,12 +11,16 @@ export const buttonTitles = {
   logout: 'Logout',
   add: 'Add to cart',
 };
-export const info = {
+export const infoText = {
   loading: 'Загрузка товаров...',
   LoggedAs: 'Logged as ',
 };
-export const errors = {
+export const errorMessages = {
   wrong: 'Что-то пошло не так!',
   loadError: 'Не удалось загрузить товары. Пожалуйста, попробуйте позже.',
-  retry: 'Попробовать снова',
+  retry: 'Попробуйте обновить страницу позже',
+  notFound: 'Товары не найдены',
+  serverError: 'Ошибка на сервере',
+  fetchError: 'Проверьте подключение к интернету',
+  timeout: 'Сервер не отвечает. Попробуйте позже',
 };

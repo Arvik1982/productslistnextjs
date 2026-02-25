@@ -1,4 +1,4 @@
-import { info } from '@/constants/texts';
+import { infoText } from '@/constants/texts';
 import styles from './loading.module.scss';
 
 export default function Loading() {
@@ -6,7 +6,7 @@ export default function Loading() {
     <div className={styles.container}>
       <div className={styles.loader}>
         <div className={styles.spinner} />
-        <p className={styles.text}>{info.loading}</p>
+        <p className={styles.text}>{infoText.loading}</p>
       </div>
     </div>
   );

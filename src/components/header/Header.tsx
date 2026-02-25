@@ -8,6 +8,8 @@ import { buttonTitles, titles } from '@/constants/texts';
 export default function Header() {
   const { user, logout } = useAuthStore();
 
+  const isClient = typeof window !== 'undefined';
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.container}`}>
@@ -16,7 +18,9 @@ export default function Header() {
         </Link>
 
         <nav className={styles.nav}>
-          {user ? (
+          {!isClient ? (
+            <div style={{ width: '60px', height: '36px' }} />
+          ) : user ? (
             <div className={styles.userInfo}>
               <span className={styles.userName}>
                 {user.firstName} {user.lastName}
