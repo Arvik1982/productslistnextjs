@@ -22,16 +22,7 @@ api.interceptors.response.use(
       if (typeof window !== 'undefined') {
         window.location.href = '/login';
       }
-
-      return Promise.reject(new Error('Unauthorized'));
     }
-
-    console.error('API Error:', {
-      status: error.response?.status,
-      data: error.response?.data,
-      url: error.config?.url,
-    });
-
     return Promise.reject(error);
   }
 );

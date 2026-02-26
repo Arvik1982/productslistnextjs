@@ -31,7 +31,7 @@ export default function Error({
       return `${errorMessages.fetchError}`;
     }
     if (message.includes('timeout') || message.includes('timed out')) {
-      return `${errorMessages.timeout}`;
+      return `${errorMessages.timeoutError}`;
     }
 
     return errorMessages.loadError;

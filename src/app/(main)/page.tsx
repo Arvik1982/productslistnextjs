@@ -2,6 +2,7 @@ import { productsApi } from '@/services/api';
 import { Product } from '@/types';
 import ProductCard from '@/components/productCard/ProductCard';
 import styles from './page.module.scss';
+import { titles } from '@/constants/texts';
 
 async function getProducts() {
   const response = await productsApi.getProducts(12);
@@ -13,7 +14,7 @@ export default async function HomePage() {
 
   return (
     <div className="container">
-      <h1 className={styles.pageTitle}>Наши товары</h1>
+      <h1 className={styles.pageTitle}>{titles.productsTitle}</h1>
       <div className={styles.productsGrid}>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

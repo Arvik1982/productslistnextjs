@@ -5,6 +5,7 @@ import { Product } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import styles from './productCard.module.scss';
 import { buttonTitles } from '@/constants/texts';
+import AppButton from '../appButton/AppButton';
 
 interface ProductCardProps {
   product: Product;
@@ -29,8 +30,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className={styles.title}>{product.title}</h3>
         <span className={styles.category}>{product.category}</span>
         <span className={styles.price}>{product.price}</span>
-
-        {user && <button className={styles.addToCartBtn}>{buttonTitles.add}</button>}
+        {user && <AppButton className={styles.addToCartBtn}>{buttonTitles.add}</AppButton>}
+        {/* {user && <button className={styles.addToCartBtn}>{buttonTitles.add}</button>} */}
       </div>
     </div>
   );

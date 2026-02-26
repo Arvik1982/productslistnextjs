@@ -4,8 +4,12 @@ import { useState, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useAuth } from '@/hooks/useAuth';
+import AppButton from '@/components/appButton/AppButton';
 import styles from './loginForm.module.scss';
-import { labels, titles } from '@/constants/texts';
+import { labels, titles, buttonTitles, errorMessages } from '@/constants/texts';
+import CustomInput from '../customInput/AppInput';
+
+const MIN_SIMBOLS = 3;
 
 export default function LoginForm() {
   const router = useRouter();
@@ -35,15 +39,15 @@ export default function LoginForm() {
     };
 
     if (!formData.username.trim()) {
-      errors.username = 'Имя пользователя обязательно';
-    } else if (formData.username.length < 3) {
-      errors.username = 'Имя пользователя должно содержать минимум 3 символа';
+      errors.username = errorMessages.usernameError;
+    } else if (formData.username.length < MIN_SIMBOLS) {
+      errors.username = `${errorMessages.minLengthValueError}${MIN_SIMBOLS}`;
     }
 
     if (!formData.password.trim()) {
-      errors.password = 'Пароль обязателен';
-    } else if (formData.password.length < 3) {
-      errors.password = 'Пароль должен содержать минимум 3 символа';
+      errors.password = errorMessages.passwordError;
+    } else if (formData.password.length < MIN_SIMBOLS) {
+      errors.password = `${errorMessages.minLengthValueError}${MIN_SIMBOLS}`;
     }
 
     setValidationErrors(errors);
@@ -56,7 +60,6 @@ export default function LoginForm() {
     if (!validateForm()) {
       return;
     }
-
     await login(formData);
   };
 
@@ -70,45 +73,35 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <h1 className={styles.title}>{titles.systemEntry}</h1>
+      <h1 className={styles.title}>{titles.SignInTitle}</h1>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="username">{labels.userName}</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          className={validationErrors.username ? styles.error : ''}
-          placeholder="jacksone"
-        />
-        {validationErrors.username && (
-          <span className={styles.errorMessage}>{validationErrors.username}</span>
-        )}
-      </div>
+      <CustomInput
+        id="username"
+        name="username"
+        type="text"
+        label={labels.userName}
+        value={formData.username}
+        onChange={handleChange}
+        error={validationErrors.username}
+        placeholder="jacksone"
+      />
 
-      <div className={styles.formGroup}>
-        <label htmlFor="password">{labels.password}</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className={validationErrors.password ? styles.error : ''}
-          placeholder="••••••••"
-        />
-        {validationErrors.password && (
-          <span className={styles.errorMessage}>{validationErrors.password}</span>
-        )}
-      </div>
+      <CustomInput
+        id="password"
+        name="password"
+        type="password"
+        label={labels.password}
+        value={formData.password}
+        onChange={handleChange}
+        error={validationErrors.password}
+        placeholder="••••••••"
+      />
 
       {error && <div className={styles.apiError}>{error}</div>}
 
-      <button type="submit" className={styles.submitBtn} disabled={isLoading}>
-        {isLoading ? 'Вход...' : 'Войти'}
-      </button>
+      <AppButton type="submit" variant="primary" fullWidth disabled={isLoading}>
+        {isLoading ? buttonTitles.loading : buttonTitles.login}
+      </AppButton>
 
       <div style={{ marginTop: '20px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
         Тестовые данные: username: jacksone, password: jacksonepass
