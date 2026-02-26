@@ -22,9 +22,7 @@ export const useAuthStore = create<AuthState>()(
 
         try {
           const userData = await authApi.login(credentials);
-
           authCookies.setToken(userData.accessToken);
-
           const cleanUser = sanitizeUser(userData);
           set({ user: cleanUser, isLoading: false, error: null });
         } catch (error) {

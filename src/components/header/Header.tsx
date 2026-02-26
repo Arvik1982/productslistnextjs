@@ -9,7 +9,7 @@ import { useAuthStore } from '@/store/authStore';
 export default function Header() {
   const { user, logout } = useAuth();
   const { isLoading } = useAuthStore();
-  console.log({ isLoading });
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.container}`}>
