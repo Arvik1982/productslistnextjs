@@ -1,8 +1,8 @@
-import { productsApi } from '@/services/api';
 import { Product } from '@/types';
 import ProductCard from '@/components/productCard/ProductCard';
 import styles from './page.module.scss';
 import { titles } from '@/constants/texts';
+import { productsApi } from '@/services/productsApi';
 
 async function getProducts() {
   const response = await productsApi.getProducts(12);

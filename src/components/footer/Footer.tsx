@@ -1,11 +1,11 @@
 'use client';
 
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 import styles from './footer.module.scss';
 import { infoText } from '@/constants/texts';
 
 export default function Footer() {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const currentYear = new Date().getFullYear();
 
   return (

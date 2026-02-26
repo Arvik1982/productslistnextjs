@@ -1,8 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AuthState, User } from '@/types';
-import { authApi } from '@/services/api';
-import { storage, STORAGE_KEYS } from '@/storage/storage';
+import { authApi } from '@/services/authApi';
+import { authCookies } from '@/lib/authCookies';
+import { errorMessages } from '@/constants/texts';
+
+const sanitizeUser = (user: User): User => {
+  const { token, accessToken, refreshToken, ...cleanUser } = user;
+  return cleanUser;
+};
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -13,41 +19,38 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (credentials) => {
         set({ isLoading: true, error: null });
+
         try {
-          const response = await authApi.login(credentials.username, credentials.password);
-          const userData: User = response.data;
+          const userData = await authApi.login(credentials);
 
-          storage.set(STORAGE_KEYS.TOKEN_KEY, userData.token);
-          storage.set(STORAGE_KEYS.USER_KEY, userData);
+          authCookies.setToken(userData.accessToken);
 
-          set({ user: userData, isLoading: false, error: null });
-        } catch {
-          set({
-            error: 'Ошибка авторизации',
-            isLoading: false,
-            user: null,
-          });
+          const cleanUser = sanitizeUser(userData);
+          set({ user: cleanUser, isLoading: false, error: null });
+        } catch (error) {
+          set({ error: errorMessages.authError, isLoading: false });
         }
       },
 
       logout: () => {
-        storage.remove(STORAGE_KEYS.TOKEN_KEY);
-        storage.remove(STORAGE_KEYS.USER_KEY);
+        authCookies.removeToken();
         set({ user: null, error: null });
       },
+
+      checkAuth: async () => {
+        const hasToken = authCookies.hasToken();
+        if (!hasToken) {
+          set({ user: null });
+          return false;
+        }
+        return true;
+      },
+
+      setUser: (user: User | null) => set({ user }),
     }),
     {
       name: 'auth-storage',
-      skipHydration: true,
+      partialize: (state) => ({ user: state.user }),
     }
   )
 );
-
-if (typeof window !== 'undefined') {
-  setTimeout(() => {
-    const user = storage.get<User>(STORAGE_KEYS.USER_KEY);
-    if (user) {
-      useAuthStore.setState({ user });
-    }
-  }, 0);
-}

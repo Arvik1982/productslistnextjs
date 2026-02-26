@@ -60,7 +60,12 @@ export default function LoginForm() {
     if (!validateForm()) {
       return;
     }
+
     await login(formData);
+
+    if (useAuthStore.getState().user) {
+      router.push('/');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

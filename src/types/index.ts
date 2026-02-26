@@ -43,4 +43,5 @@ export interface AuthState {
   error: string | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
+  setUser: (user: User | null) => void;
 }

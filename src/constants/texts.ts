@@ -28,4 +28,5 @@ export const errorMessages = {
   usernameError: 'Имя пользователя обязательно',
   minLengthValueError: 'Минимальное количество символов',
   passwordError: 'Пароль обязателен',
+  authError: 'Ошибка авторизации',
 };
