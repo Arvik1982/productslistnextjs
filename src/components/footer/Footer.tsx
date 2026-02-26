@@ -1,11 +1,11 @@
 'use client';
 
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 import styles from './footer.module.scss';
-import { info } from '@/constants/texts';
+import { infoText } from '@/constants/texts';
 
 export default function Footer() {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
         <span className={styles.year}>© {currentYear}</span>
         {user && (
           <span className={styles.userEmail}>
-            {info.LoggedAs}
+            {infoText.LoggedAs}
             {user.email}
           </span>
         )}

@@ -6,7 +6,9 @@ export interface User {
   lastName: string;
   gender: string;
   image: string;
-  token: string;
+  accessToken?: string;
+  refreshToken?: string;
+  token?: string;
 }
 
 export interface Product {
@@ -41,4 +43,5 @@ export interface AuthState {
   error: string | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
+  setUser: (user: User | null) => void;
 }

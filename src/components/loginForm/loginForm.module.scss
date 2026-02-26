@@ -1,8 +1,6 @@
 $form-max-width: 400px;
 $form-padding: 30px;
 $border-radius: 8px;
-$input-padding: 10px 12px;
-$btn-padding: 12px;
 $error-height: 42px;
 $transition-speed: 0.3s;
 $mobile-breakpoint: 480px;
@@ -11,12 +9,6 @@ $mobile-breakpoint: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-@mixin absolute-full {
-  position: absolute;
-  left: 0;
-  right: 0;
 }
 
 @mixin transition {
@@ -39,7 +31,7 @@ $mobile-breakpoint: 480px;
   position: relative;
 
   @include mobile {
-    padding: $form-padding * 0.8; // 24px на мобильных
+    padding: $form-padding * 0.8;
     max-width: 100%;
     margin: 0 15px;
   }
@@ -57,62 +49,6 @@ $mobile-breakpoint: 480px;
     }
   }
 
-  .formGroup {
-    margin-bottom: 20px;
-    position: relative;
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: var(--foreground);
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: $input-padding;
-      border: 1px solid var(--border);
-      border-radius: $border-radius;
-      font-size: 16px;
-      background-color: var(--background);
-      color: var(--foreground);
-
-      @include transition;
-
-      &:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
-      }
-
-      &.error {
-        border-color: var(--danger);
-
-        &:focus {
-          box-shadow: 0 0 0 3px rgb(220 38 38 / 10%);
-        }
-      }
-
-      &::placeholder {
-        color: var(--gray);
-        opacity: 60%;
-      }
-    }
-  }
-
-  .errorMessage {
-    color: var(--danger);
-    font-size: 12px;
-    position: absolute;
-    bottom: -18px;
-
-    @include absolute-full;
-
-    text-align: left;
-    font-weight: 500;
-  }
-
   .apiError {
     position: absolute;
     bottom: 100px;
@@ -124,12 +60,14 @@ $mobile-breakpoint: 480px;
     font-weight: 500;
 
     @include flex-center;
+    @include transition;
 
     min-height: $error-height;
     pointer-events: none;
     background-color: transparent;
     border: none;
     font-size: 14px;
+    animation: fadeIn 0.2s ease-out;
 
     @include mobile {
       bottom: 90px;
@@ -138,46 +76,13 @@ $mobile-breakpoint: 480px;
     }
   }
 
-  .submitBtn {
-    width: 100%;
-    padding: $btn-padding;
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: $border-radius;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-
-    @include transition;
-
-    position: relative;
-    z-index: 1;
-
-    &:hover:not(:disabled) {
-      background-color: var(--primary-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgb(37 99 235 / 20%);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    &:disabled {
-      opacity: 60%;
-      cursor: not-allowed;
-    }
-  }
-
   &::after {
     content: '';
     display: block;
-    height: $error-height + 8px; // 50px
+    height: $error-height + 8px;
   }
 }
 
-// Анимация для появления ошибки
 @keyframes fadeIn {
   from {
     opacity: 0%;
@@ -188,8 +93,4 @@ $mobile-breakpoint: 480px;
     opacity: 100%;
     transform: translateY(0);
   }
-}
-
-.apiError {
-  animation: fadeIn 0.2s ease-out;
 }

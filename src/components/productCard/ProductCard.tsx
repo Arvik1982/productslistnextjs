@@ -2,16 +2,17 @@
 
 import Image from 'next/image';
 import { Product } from '@/types';
-import { useAuthStore } from '@/store/authStore';
 import styles from './productCard.module.scss';
 import { buttonTitles } from '@/constants/texts';
+import AppButton from '../appButton/AppButton';
+import { useAuth } from '@/hooks/useAuth';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
 
   return (
     <div className={styles.card}>
@@ -29,8 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className={styles.title}>{product.title}</h3>
         <span className={styles.category}>{product.category}</span>
         <span className={styles.price}>{product.price}</span>
-
-        {user && <button className={styles.addToCartBtn}>{buttonTitles.add}</button>}
+        {user && <AppButton className={styles.addToCartBtn}>{buttonTitles.add}</AppButton>}
       </div>
     </div>
   );

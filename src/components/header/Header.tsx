@@ -1,22 +1,23 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuthStore } from '@/store/authStore';
 import styles from './header.module.scss';
 import { buttonTitles, titles } from '@/constants/texts';
+import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/store/authStore';
 
 export default function Header() {
-  const { user, logout } = useAuthStore();
+  const { user, logout } = useAuth();
+  const { isLoading } = useAuthStore();
 
   return (
     <header className={styles.header}>
       <div className={`container ${styles.container}`}>
         <Link href="/" className={styles.logo}>
-          {titles.siteName}
+          {titles.siteNameTitle}
         </Link>
-
         <nav className={styles.nav}>
-          {user ? (
+          {!isLoading && user ? (
             <div className={styles.userInfo}>
               <span className={styles.userName}>
                 {user.firstName} {user.lastName}

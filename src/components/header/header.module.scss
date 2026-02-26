@@ -105,4 +105,27 @@ $transition-speed: 0.3s;
       color: #fff;
     }
   }
+
+  .skeleton {
+    width: 100px;
+    height: 36px;
+    background: linear-gradient(
+      90deg,
+      var(--gray-light) 25%,
+      var(--border) 50%,
+      var(--gray-light) 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+  }
+
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 }
