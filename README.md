@@ -40,3 +40,9 @@ npm install
 
 npm run dev
 ```
+### Versel
+```bash
+
+https://nextproductslist.vercel.app/
+
+```
